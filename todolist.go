@@ -28,6 +28,16 @@ func getLists(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, `{"alive": true}`)
 }
 
+func getItemById(Id int) bool {
+	todo := &TodoItemModel{}
+	result := db.First(&todo, Id)
+	if result.Error != nil {
+		log.Warn("TodoItems not found in DB")
+		return false
+	}
+	return true
+}
+
 func CreateItem(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 	log.WithFields(log.Fields{"description": description}).Info("Add new TodoItem. Saving to database.")
