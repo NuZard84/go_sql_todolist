@@ -59,12 +59,15 @@ func CreateItem(w http.ResponseWriter, r *http.Request) {
 
 func UpdateItem(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	Id, _ := strconv.Atoi(vars["Id"])
+	Id, _ := strconv.Atoi(vars["id"])
+	fmt.Printf("Id----->: %d\n", Id)
 	isItemExist := getItemById(Id)
 
 	if !isItemExist {
 		w.Header().Set("Content-Type", "application/json")
 		io.WriteString(w, `{"message": "Item not found"}`)
+		fmt.Printf("Id----->: %d\n", Id)
+
 		return
 	} else {
 		completed, _ := strconv.ParseBool(r.FormValue("completed"))
